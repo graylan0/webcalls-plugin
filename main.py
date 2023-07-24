@@ -1,20 +1,19 @@
-from quart import Quart, request, jsonify
-import aiohttp
+from flask import Flask, request, jsonify
+import requests
 from github import Github
 import os
 
-app = Quart(__name__)
+app = Flask(__name__)
 
 @app.route('/v1', methods=['POST'])
-async def handle_instruction():
-    instruction = await request.json
+def handle_instruction():
+    instruction = request.json
     action = instruction['action']
 
     if action == 'scrape_url':
         url = instruction['url']
-        async with aiohttp.ClientSession() as session:
-            async with session.get(url) as response:
-                content = await response.text()
+        response = requests.get(url)
+        content = response.text
         return jsonify({'content': content})
 
     elif action == 'rest_api_call':
@@ -22,9 +21,8 @@ async def handle_instruction():
         method = instruction['http_method']
         headers = instruction.get('payload_headers', {})
         body = instruction.get('payload_body', {})
-        async with aiohttp.ClientSession() as session:
-            async with session.request(method, url, headers=headers, data=body) as response:
-                content = await response.text()
+        response = requests.request(method, url, headers=headers, data=body)
+        content = response.text
         return jsonify({'content': content})
 
     elif action == 'grab_github_repo':
@@ -41,3 +39,4 @@ async def handle_instruction():
 
 if __name__ == "__main__":
     app.run(port=5000)
+
