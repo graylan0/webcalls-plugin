@@ -1,0 +1,62 @@
+openapi: 3.0.0
+info:
+  title: WebCalls
+  version: 1.0.0
+  description: A simple plugin for making HTTP requests.
+paths:
+  /scrape_url:
+    post:
+      summary: Scrape a URL.
+      operationId: scrape_url
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                url:
+                  type: string
+                  description: The URL to scrape.
+              required:
+                - url
+      responses:
+        '200':
+          description: The scraped content.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  content:
+                    type: string
+                    description: The scraped content.
+  /rest_api_call:
+    post:
+      summary: Make a REST API call.
+      operationId: rest_api_call
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                url:
+                  type: string
+                  description: The URL to call.
+                http_method:
+                  type: string
+                  description: The HTTP method to use.
+              required:
+                - url
+                - http_method
+      responses:
+        '200':
+          description: The response content.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  content:
+                    type: string
+                    description: The response content.

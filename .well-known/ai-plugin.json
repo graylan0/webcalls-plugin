@@ -1,0 +1,21 @@
+{
+    "name": "WebCalls",
+    "version": "1.0.0",
+    "author": "Gray00",
+    "url": "https://github.com/graylan0/webcalls-plugin",
+    "description": "A plugin for making web requests and interacting with GitHub.",
+    "instructions": {
+        "scrape_url": {
+            "url": "string"
+        },
+        "rest_api_call": {
+            "url": "string",
+            "http_method": "string",
+            "payload_headers": "string (optional)",
+            "payload_body": "string (optional)"
+        },
+        "grab_github_repo": {
+            "repo_url": "string"
+        }
+    }
+}
